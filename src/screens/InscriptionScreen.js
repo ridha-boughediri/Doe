@@ -8,15 +8,11 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-// import Layouts from "../../components/constants/Layout";
-// import Button from "../../components/CustomButon/CustomButton";
-// import Input from "../../components/CustomInput/CustomInput";
-import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AutContext";
 
 const InscriptionScreen = ({ navigation }) => {
-  // preparation de la data en mode inscription
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [lastname, setLastname] = useState("");
@@ -26,7 +22,7 @@ const InscriptionScreen = ({ navigation }) => {
 
   const { test } = useContext(AuthContext);
 
-  const { handleSignup } = useContext(AuthContext);
+  // const { handleSignup } = useContext(AuthContext);
 
   // message alerte creation
 
@@ -35,24 +31,24 @@ const InscriptionScreen = ({ navigation }) => {
     type: "",
     message: "",
   });
-  const handleSignUpPress = async () => {
-    const signUpResult = await handleSignup(
-      email,
-      login,
-      password,
-      lastname,
-      firstname
-    );
-    if (signUpResult) {
-      navigation.navigate("Login", {
-        message: "Inscription réussie ! Veuillez vous connecter.",
-      });
-    } else {
-      setErrorMessage(
-        "Une erreur est survenue lors de l'inscription. Veuillez réessayer."
-      );
-    }
-  };
+  // const handleSignUpPress = async () => {
+  //   const signUpResult = await handleSignup(
+  //     email,
+  //     login,
+  //     password,
+  //     lastname,
+  //     firstname
+  //   );
+  //   if (signUpResult) {
+  //     navigation.navigate("Login", {
+  //       message: "Inscription réussie ! Veuillez vous connecter.",
+  //     });
+  //   } else {
+  //     setErrorMessage(
+  //       "Une erreur est survenue lors de l'inscription. Veuillez réessayer."
+  //     );
+  //   }
+  // };
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
@@ -112,7 +108,10 @@ const InscriptionScreen = ({ navigation }) => {
               onChangeText={(v) => setPassword(v)}
             />
 
-            <TouchableOpacity style={styles.button} onPress={handleSignUpPress}>
+            <TouchableOpacity
+              style={styles.button}
+              // onPress={handleSignUpPress}
+            >
               <Text
                 style={{
                   fontSize: 11,

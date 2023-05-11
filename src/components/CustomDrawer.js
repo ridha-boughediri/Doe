@@ -1,118 +1,86 @@
-import * as React from "react";
-import { View, Text, Button, Image, StyleSheet } from "react-native";
+import React from "react";
+
 import {
-  createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
+import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
-import MessagesScreen from "../screens/MessagesScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import HomeScreen from "../screens/HomeScreen";
-import NotificationScreen from "../screens/NotificationScreen";
-
-function Feed({ navigation }) {
+const CustomDrawer = (props) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#87ffEB",
-      }}
-    >
-      <Text>Feed Screen</Text>
-      <Button title="Open drawer" onPress={() => navigation.openDrawer()} />
-      <Button title="Toggle drawer" onPress={() => navigation.toggleDrawer()} />
-    </View>
-  );
-}
-
-function Notifications() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#87ffEB",
-      }}
-    >
-      <Text>Notifications Screen</Text>
-    </View>
-  );
-}
-
-function CustomDrawerContent(props) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <View
-        style={{
-          alignItems: "center",
-          padding: 20,
-          backgroundColor: "#87CEEB",
-        }}
+    <View style={{ flex: 1 }}>
+      <DrawerContentScrollView
+        {...props}
+        contentContainerStyle={{ backgroundColor: "#7AC0FF" }}
       >
-        <Image
-          source={require("../../assets/logo_fidmarseille.png")}
-          style={{ width: 80, height: 80, borderRadius: 40 }}
-        />
-        <Text style={{ marginVertical: 10 }}>Username</Text>
+        <ImageBackground
+          source={require("../../assets/backgroundblue.png")}
+          style={{ padding: 20, height: 150 }}
+        >
+          <ImageBackground
+            source={require("../../assets/profile.png")}
+            style={{
+              height: 80,
+              width: 80,
+              marginBottom: 10,
+              borderRadius: 60,
+            }}
+          />
+
+          <View style={{ flexDirection: "column" }}>
+            <Text
+              style={{
+                color: "red",
+                fontSize: 15,
+                fontFamily: "Roboto-Medieum",
+              }}
+            >
+              Julien Athomas
+            </Text>
+          </View>
+        </ImageBackground>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+
+      <View
+        style={{ padding: 20, borderStartWidth: 1, borderTopColor: "#ccc" }}
+      >
+        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialIcons name="settings" size={24} color="black" />
+            <Text
+              style={{
+                fontSize: 15,
+                fontFamily: "Roboto-Medium",
+                marginLeft: 5,
+              }}
+            >
+              Parametres
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialCommunityIcons
+              name="logout-variant"
+              size={24}
+              color="black"
+            />
+            <Text
+              style={{
+                fontSize: 15,
+                fontFamily: "Roboto-Medium",
+                marginLeft: 5,
+              }}
+            >
+              Deconnection
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Déconnexion"
-        onPress={() => {
-          // Code pour déconnecter l'utilisateur
-        }}
-        style={styles.logoutButton}
-        labelStyle={styles.logoutButtonText}
-      />
-      <DrawerItem
-        label="Paramètres"
-        onPress={() => {
-          // Code pour ouvrir les paramètres
-        }}
-        style={styles.settingsButton}
-        labelStyle={styles.settingsButtonText}
-      />
-    </DrawerContentScrollView>
+    </View>
   );
-}
-
-const Drawer = createDrawerNavigator();
-
-function CustomDrawer() {
-  return (
-    <Drawer.Navigator
-      useLegacyImplementation
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-    >
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Message" component={MessagesScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="Notifications" component={NotificationScreen} />
-    </Drawer.Navigator>
-  );
-}
-
-const styles = StyleSheet.create({
-  logoutButton: {
-    backgroundColor: "#FFA500",
-    marginTop: "auto",
-  },
-  logoutButtonText: {
-    color: "#fff",
-  },
-  settingsButton: {
-    marginTop: 16,
-    backgroundColor: "#FFA500",
-    marginTop: "auto",
-  },
-  settingsButtonText: {
-    color: "#255455",
-  },
-});
+};
 
 export default CustomDrawer;

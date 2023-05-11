@@ -1,1 +1,1 @@
-export const baseURLlien = process.env.API_URL || "http://localhost:3000";
+export const baseURLlien = "http://localhost:3000";

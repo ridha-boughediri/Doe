@@ -5,7 +5,7 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Image
-        source={require("../../../../assets/image/US_Sports_Insights-removebg-preview.png")}
+        source={require("../../assets/istockphoto-1067918034-612x612-removebg-preview.png")}
         style={{ width: 300, height: 300 }}
       />
       <Text

@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { baseURLlien } from "../utils/config";
 
 export const AuthContext = createContext();
@@ -14,12 +13,34 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
 
-  const login = async (email, password) => {
+  const login =  () => {
     setIsLoading(true);
     setUserToken("123456789");
-    AsyncStorage.setItem("userToken", userToken);
+    SecureStore.setItemAsync("userToken", userToken);
     setIsLoading(false);
+  };
 
+
+
+  const logout = () => {
+    setIsLoading(true);
+    setUserToken(null);
+    SecureStore.removeItem("userToken");
+    setIsLoading(false);
+  }
+
+  const isLoggedIn = async () => {
+    try {
+      setIsLoading(true);
+      let userToken = await SecureStore.getItemAsync("userToken");
+      setUserToken(userToken);
+      setIsLoading(false);
+      
+    } catch (error) {
+      console.log(`isLogged in error ${error}`)
+      
+    }
+  }
     // try {
     //   setIsLoading(true);
     //   const response = await axios.post(`baseURLlien/${auth/login}`, {
@@ -43,60 +64,70 @@ export const AuthProvider = ({ children }) => {
     // }
   };
 
-  const handleSignup = async (email, login, password, lastname, firstname) => {
-    try {
-      // Envoi des informations d'inscription au backend avec Axios
-      const response = await axios.post(`baseURLlien/${users / register}`, {
-        email,
-        login,
-        password,
-        lastname,
-        firstname,
-      });
+  // const handleSignup = async (email, login, password, lastname, firstname) => {
+  //   try {
+  //     // Envoi des informations d'inscription au backend avec Axios
+  //     const response = await axios.post(`baseURLlien/${users / register}`, {
+  //       email,
+  //       login,
+  //       password,
+  //       lastname,
+  //       firstname,
+  //     });
 
-      const data = response.data;
+  //     const data = response.data;
 
-      // Si l'inscription est réussie, sauvegarder l'access_token et les informations utilisateur dans SecureStore
-      if (response.status === 200) {
-        await SecureStore.setItemAsync("access_token", data.access_usertoken);
-        await SecureStore.setItemAsync(
-          "user_info",
-          JSON.stringify(data.user_info)
-        );
+  //     // Si l'inscription est réussie, sauvegarder l'access_token et les informations utilisateur dans SecureStore
+  //     if (response.status === 200) {
+  //       await SecureStore.setItemAsync("access_token", data.access_usertoken);
+  //       await SecureStore.setItemAsync(
+  //         "user_info",
+  //         JSON.stringify(data.user_info)
+  //       );
 
-        Alert.alert("Succès", "Inscription réussie.");
-      } else {
-        Alert.alert("Erreur", data.message);
-      }
-    } catch (error) {
-      Alert.alert("Erreur", "Une erreur est survenue.");
-    }
-  };
+  //       Alert.alert("Succès", "Inscription réussie.");
+  //     } else {
+  //       Alert.alert("Erreur", data.message);
+  //     }
+  //   } catch (error) {
+  //     Alert.alert("Erreur", "Une erreur est survenue.");
+  //   }
+  // };
 
-  const logout = async () => {
-    setIsLoading(true);
-    setUserToken(null);
-    AsyncStorage.removeItem("userToken");
-    setIsLoading(false);
-  };
+  // const logout = async () => {
+  //   setIsLoading(true);
+  //   setUserToken(null);
+  //   AsyncStorage.removeItem("userToken");
+  //   setIsLoading(false);
+  // };
 
-  const isLoggedIn = async () => {
-    try {
-      setIsLoading(true);
-      let userToken = await AsyncStorage.getItem("userToken");
-      setUserToken(userToken);
-      setIsLoading(false);
-    } catch (e) {
-      console.error(`isLogged in error ${e}`);
-    }
-  };
+  // const isLoggedIn = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     let userToken = await AsyncStorage.getItem("userToken");
+  //     setUserToken(userToken);
+  //     setIsLoading(false);
+  //   } catch (e) {
+  //     console.error(`isLogged in error ${e}`);
+  //   }
+  // };
 
-  useEffect(() => {
-    isLoggedIn();
-  }, []);
+  // useEffect(() => {
+  //   isLoggedIn();
+  // }, []);
 
   return (
     <AuthContext.Provider
+      value={{
+        test,
+        isLoading,
+        userToken,
+        login,
+        logout,
+        isLoggedIn,
+      }}
+    >
+      {/* <AuthContext.Provider
       value={{
         test,
         handleSignup,
@@ -105,7 +136,7 @@ export const AuthProvider = ({ children }) => {
         userToken,
         login,
       }}
-    >
+    > */}
       {children}
     </AuthContext.Provider>
   );

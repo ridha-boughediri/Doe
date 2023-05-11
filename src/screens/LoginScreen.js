@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+// import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
+
 import {
   View,
   Text,
@@ -7,9 +9,6 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons/";
-import { root } from "postcss";
-import * as SecureStore from "expo-secure-store";
 import { AuthContext } from "../context/AuthContext";
 
 const LoginScreen = ({ navigation }) => {
@@ -19,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
 
   const { test } = useContext(AuthContext);
-  const { handeLogin } = useContext(AuthContext);
+  // const { handeLogin } = useContext(AuthContext);
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -31,17 +30,17 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const handleLoginPress = () => {
-    handeLogin(email, password);
-  };
+  // const handleLoginPress = () => {
+  //   handeLogin(email, password);
+  // };
 
-  useEffect(() => {
-    const getInfo = async () => {
-      const res = await SecureStore.getItemAsync("access_usertoken");
-      setUserToken(res);
-    };
-    getInfo();
-  }, []);
+  // useEffect(() => {
+  //   const getInfo = async () => {
+  //     const res = await SecureStore.getItemAsync("access_usertoken");
+  //     setUserToken(res);
+  //   };
+  //   getInfo();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -73,7 +72,10 @@ const LoginScreen = ({ navigation }) => {
           <MaterialCommunityIcons name={rightIcon} size={22} color="#fbb034" />
         </Pressable>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleLoginPress}>
+      <TouchableOpacity
+        style={styles.button}
+        // onPress={handleLoginPress}
+      >
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
       <View style={styles.linksContainer}>

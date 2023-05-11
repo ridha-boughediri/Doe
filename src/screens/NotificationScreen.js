@@ -1,49 +1,49 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
-import Constants from "expo-constants";
-import { Notifications } from "expo";
+// import Constants from "expo-constants";
+// import { Notifications } from "expo";
 
 const NotificationScreen = () => {
-  const [pushNotificationsEnabled, setPushNotificationsEnabled] =
-    useState(false);
-  const [pushNotificationToken, setPushNotificationToken] = useState(null);
+  // const [pushNotificationsEnabled, setPushNotificationsEnabled] =
+  //   useState(false);
+  // const [pushNotificationToken, setPushNotificationToken] = useState(null);
 
-  const registerForPushNotifications = async () => {
-    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    if (status !== "granted") {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      if (status !== "granted") {
-        return;
-      }
-    }
-    const token = await Notifications.getExpoPushTokenAsync();
-    setPushNotificationToken(token);
-  };
+  // const registerForPushNotifications = async () => {
+  //   const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  //   if (status !== "granted") {
+  //     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //     if (status !== "granted") {
+  //       return;
+  //     }
+  //   }
+  //   const token = await Notifications.getExpoPushTokenAsync();
+  //   setPushNotificationToken(token);
+  // };
 
-  const togglePushNotifications = () => {
-    setPushNotificationsEnabled(!pushNotificationsEnabled);
-    if (pushNotificationsEnabled) {
-      Notifications.cancelAllScheduledNotificationsAsync();
-    } else {
-      registerForPushNotifications();
-    }
-  };
+  // const togglePushNotifications = () => {
+  //   setPushNotificationsEnabled(!pushNotificationsEnabled);
+  //   if (pushNotificationsEnabled) {
+  //     Notifications.cancelAllScheduledNotificationsAsync();
+  //   } else {
+  //     registerForPushNotifications();
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <View style={styles.setting}>
         <Text style={styles.settingText}>Push Notifications</Text>
-        <Switch
+        {/* <Switch
           value={pushNotificationsEnabled}
           onValueChange={togglePushNotifications}
-        />
+        /> */}
       </View>
-      {pushNotificationToken && (
+      {/* {pushNotificationToken && (
         <View style={styles.token}>
           <Text style={styles.tokenLabel}>Push Notification Token:</Text>
           <Text style={styles.tokenValue}>{pushNotificationToken}</Text>
         </View>
-      )}
+      )} */}
     </View>
   );
 };
