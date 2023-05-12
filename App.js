@@ -1,19 +1,17 @@
 import React from "react";
-// /import AppStack from "./src/navigation/AppStack";
-import { AuthProvider } from "./src/context/AutContext";
-// import AppNav from "./src/navigation/AppNav";
-// import AppNav2 from "./src/navigation/AppNav2";
-import AppStack from "./src/navigation/AppStack";
+import AppNav from "./src/navigation/AppNav";
+// import AppStack from "./src/navigation/AppStack";
+// import AuthStack from "./src/navigation/AutStack";
 // import { createStackNavigator } from "@react-navigation/stack";
-import AuthStack from "./src/navigation/AutStack";
+import AuthProvider from "./src/Context/AutContext";
 
 const App = () => {
   return (
     <AuthProvider>
       {/* <AppStack /> */}
 
-      {/* <AppNav /> */}
-      <AuthStack />
+      <AppNav />
+      {/* <AuthStack /> */}
     </AuthProvider>
   );
 };

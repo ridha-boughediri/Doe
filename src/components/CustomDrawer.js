@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext } from "react";
 
 import {
   DrawerContentScrollView,
@@ -6,8 +7,10 @@ import {
 } from "@react-navigation/drawer";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { AuthContext } from "../Context/AutContext";
 
 const CustomDrawer = (props) => {
+  const { logout, userInfo } = useContext(AuthContext);
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -33,10 +36,10 @@ const CustomDrawer = (props) => {
               style={{
                 color: "red",
                 fontSize: 15,
-                fontFamily: "Roboto-Medieum",
+                // fontFamily: "Roboto-Medieum",
               }}
             >
-              Julien Athomas
+              {userInfo ? userInfo.firstname : "test"}
             </Text>
           </View>
         </ImageBackground>
@@ -52,7 +55,7 @@ const CustomDrawer = (props) => {
             <Text
               style={{
                 fontSize: 15,
-                fontFamily: "Roboto-Medium",
+                // fontFamily: "Roboto-Medium",
                 marginLeft: 5,
               }}
             >
@@ -60,7 +63,12 @@ const CustomDrawer = (props) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
+        <TouchableOpacity
+          onPress={() => {
+            logout();
+          }}
+          style={{ paddingVertical: 15 }}
+        >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialCommunityIcons
               name="logout-variant"
@@ -70,7 +78,6 @@ const CustomDrawer = (props) => {
             <Text
               style={{
                 fontSize: 15,
-                fontFamily: "Roboto-Medium",
                 marginLeft: 5,
               }}
             >

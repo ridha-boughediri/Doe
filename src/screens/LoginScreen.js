@@ -1,6 +1,6 @@
 // import React, { useState, useEffect, useContext } from "react";
-import React, { useState } from "react";
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -9,16 +9,15 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../Context/AutContext";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { test, connexion } = useContext(AuthContext);
+
+  const [email, setEmail] = useState("ridha@gmail.com");
+  const [password, setPassword] = useState("ridha");
   const [rightIcon, setRightIcon] = useState("eye");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
-
-  const { test } = useContext(AuthContext);
-  // const { handeLogin } = useContext(AuthContext);
 
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
@@ -29,18 +28,6 @@ const LoginScreen = ({ navigation }) => {
       setPasswordVisibility(!passwordVisibility);
     }
   };
-
-  // const handleLoginPress = () => {
-  //   handeLogin(email, password);
-  // };
-
-  // useEffect(() => {
-  //   const getInfo = async () => {
-  //     const res = await SecureStore.getItemAsync("access_usertoken");
-  //     setUserToken(res);
-  //   };
-  //   getInfo();
-  // }, []);
 
   return (
     <View style={styles.container}>
@@ -53,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
       <TextInput
         style={styles.input}
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={setEmail}
         placeholder="Email"
         placeholderTextColor={"white"}
         autoCapitalize="none"
@@ -63,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
         <TextInput
           style={styles.input}
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={setPassword}
           placeholder="Mot de passe"
           placeholderTextColor={"white"}
           secureTextEntry={passwordVisibility}
@@ -74,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.button}
-        // onPress={handleLoginPress}
+        onPress={() => connexion(email, password)}
       >
         <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
@@ -99,11 +86,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 20,
-    backgroundColor: "black",
+    backgroundColor: "gray",
   },
 
   headTxt: {
-    color: "white",
+    color: "black",
     fontSize: 20,
     // fontFamily: 'Copperplate',
     marginTop: "5%",

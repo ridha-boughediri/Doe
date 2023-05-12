@@ -10,9 +10,12 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { useContext } from "react";
-import { AuthContext } from "../context/AutContext";
+import { AuthContext } from "../Context/AutContext";
+import { BASE_URL } from "../config";
+import axios from "axios";
 
 const InscriptionScreen = ({ navigation }) => {
+  BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [lastname, setLastname] = useState("");
@@ -22,33 +25,36 @@ const InscriptionScreen = ({ navigation }) => {
 
   const { test } = useContext(AuthContext);
 
-  // const { handleSignup } = useContext(AuthContext);
-
-  // message alerte creation
-
   const [alertos, setAlertos] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
-  // const handleSignUpPress = async () => {
-  //   const signUpResult = await handleSignup(
-  //     email,
-  //     login,
-  //     password,
-  //     lastname,
-  //     firstname
-  //   );
-  //   if (signUpResult) {
-  //     navigation.navigate("Login", {
-  //       message: "Inscription réussie ! Veuillez vous connecter.",
-  //     });
-  //   } else {
-  //     setErrorMessage(
-  //       "Une erreur est survenue lors de l'inscription. Veuillez réessayer."
-  //     );
-  //   }
-  // };
+
+  const handleSignup = async () => {
+    try {
+      // Envoi des informations d'inscription au backend avec Axios
+      const response = await axios.post(`${BASE_URL}/users/register`, {
+        email,
+        login,
+        password,
+        lastname,
+        firstname,
+      });
+
+      const data = response.data;
+
+      // Si l'inscription est réussie, sauvegarder l'access_token et les informations utilisateur dans SecureStore
+      if (response.status === 200) {
+        alert("Succès Inscription réussie.");
+        navigation.navigate("Login");
+      } else {
+        alert("Erreur", data.message);
+      }
+    } catch (error) {
+      alert("Erreur", "Une erreur est survenue.");
+    }
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
@@ -110,7 +116,7 @@ const InscriptionScreen = ({ navigation }) => {
 
             <TouchableOpacity
               style={styles.button}
-              // onPress={handleSignUpPress}
+              onPress={() => handleSignup()}
             >
               <Text
                 style={{
