@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Image,
 } from "react-native";
 import { useState } from "react";
 import { useContext } from "react";
@@ -57,7 +58,13 @@ const InscriptionScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
+    <View style={{ flex: 1 }}>
+      <Image
+        source={{
+          uri: "https://media.giphy.com/media/tYiXuzR2KdbiCmSI5n/giphy.gif",
+        }}
+        style={styles.backgroundImage}
+      />
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.headTxt}>Créez un compte</Text>
@@ -138,7 +145,7 @@ const InscriptionScreen = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -146,8 +153,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    // padding: 20,
+    // backgroundColor: "black",
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: "black",
   },
 
   headTxt: {

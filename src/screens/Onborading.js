@@ -1,11 +1,16 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Constants } from "expo";
 
 const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Image
-        source={require("../../assets/istockphoto-1067918034-612x612-removebg-preview.png")}
+        // https://media.giphy.com/media/L66GdrqzbfhnsaDanq/giphy.gif
+        // source={require("../../assets/istockphoto-1067918034-612x612-removebg-preview.png")}
+        source={{
+          uri: "https://media.giphy.com/media/dWryx4eltxMMEXOIzi/giphy.gif",
+        }}
         style={{ width: 300, height: 300 }}
       />
       <Text

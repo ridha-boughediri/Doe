@@ -6,7 +6,10 @@ function HomeScreen() {
     <View style={styles.container}>
       <Image
         style={styles.backgroundImage}
-        source={require("../../assets/background-superbol.jpg")}
+        // source={require("../../assets/background-superbol.jpg")}
+        source={{
+          uri: "https://media.giphy.com/media/9sqWYjI9M4SkoYBvkJ/giphy.gif",
+        }}
       />
 
       <View style={styles.overlay}>

@@ -5,6 +5,12 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Image
+        source={{
+          uri: "https://media.giphy.com/media/2lKZ0Gw0mLGwcIL7Dd/giphy.gif",
+        }}
+        style={styles.backgroundImage}
+      />
+      <Image
         source={require("../../assets/profile.png")}
         style={styles.profileImage}
       />
@@ -23,7 +29,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
   profileImage: {
     width: 150,
@@ -35,10 +56,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    color: "#fbb034",
   },
   profileBio: {
     fontSize: 16,
     textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

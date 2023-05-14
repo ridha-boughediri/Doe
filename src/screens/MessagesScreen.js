@@ -5,6 +5,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native";
 
 const messagesData = [
@@ -50,6 +51,11 @@ const MessagesScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image
+        style={styles.backgroundImage}
+        source={require("../../assets/background-superbol.jpg")}
+        // https://media.giphy.com/media/dWryx4eltxMMEXOIzi/giphy.gif
+      />
       <FlatList
         data={messagesData}
         renderItem={renderMessage}
@@ -64,6 +70,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
   messagesList: {
     paddingVertical: 20,

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+  Image,
 } from "react-native";
 import { AuthContext } from "../Context/AutContext";
 
@@ -31,10 +32,16 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.linkText}>Mot de passe oublié</Text>
+      <Image
+        source={{
+          uri: "https://media.giphy.com/media/nFajf45jOVILGDMY9F/giphy.gif",
+        }}
+        style={styles.backgroundImage}
+      />
+      {/* <Text style={styles.linkText}>Mot de passe oublié</Text> */}
       <Text style={styles.headTxt}>
         Connectez-vous pour avoir accès aux espaces de chat !
-        <Text style={styles.linkText}>{test}</Text>
+        {/* <Text style={styles.linkText}>{test}</Text> */}
       </Text>
 
       <TextInput
@@ -84,17 +91,33 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "gray",
   },
-
   headTxt: {
-    color: "black",
+    marginHorizontal: 100,
+    marginVertical: 50,
+    // marginTop: "50%",
+    // marginBottom: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    color: "white",
     fontSize: 20,
-    // fontFamily: 'Copperplate',
-    marginTop: "5%",
-    marginBottom: "35%",
+    marginTop: "35%",
+    // marginBottom: "35%",
   },
 
   input: {
@@ -124,7 +147,8 @@ const styles = StyleSheet.create({
 
   linksContainer: {
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 50,
+    marginBottom: 50,
     justifyContent: "space-between",
     width: "100%",
   },
