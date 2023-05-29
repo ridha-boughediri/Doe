@@ -6,9 +6,8 @@ import { GiftedChat } from "react-native-gifted-chat-expo";
 function ChatbotScreen() {
   const [messages, setMessages] = useState([]);
 
-  const MON_CHATGPT_TOKEN =
-    "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";
-  const MON_CHATGPT_URL =
+  const cle =
+    process.env.MON_CHATGPT_URL ||
     "https://api.openai.com/v1/engines/text-davinci-003/completions";
 
   const handleSend = async (newMessages = []) => {
