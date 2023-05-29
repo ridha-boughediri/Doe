@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
+import { AuthContext } from "../Context/AutContext";
+import { useContext } from "react";
 
 const ProfileScreen = () => {
+  const { userInfo } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <Image
@@ -14,7 +18,12 @@ const ProfileScreen = () => {
         source={require("../../assets/profile.png")}
         style={styles.profileImage}
       />
-      <Text style={styles.profileName}>John Doe</Text>
+      <Text style={styles.profileName}>
+        {userInfo ? userInfo.lastname : "test"}{" "}
+        {userInfo ? userInfo.firstname : "test"}
+        {userInfo ? userInfo.login : "test"}
+        {userInfo ? userInfo.email : "test"}
+      </Text>
       <Text style={styles.profileBio}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis
         ligula eu enim congue vehicula. Ut vel ullamcorper velit. Sed in ipsum

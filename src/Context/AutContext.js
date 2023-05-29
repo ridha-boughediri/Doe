@@ -61,29 +61,6 @@ const AuthProvider = ({ children }) => {
     isLoggedIn();
   }, []);
 
-  // try {
-  //   setIsLoading(true);
-  //   const response = await axios.post(`baseURLlien/${auth/login}`, {
-  //     email,
-  //     password,
-  //   });
-  //   const data = response.data;
-  //   await SecureStore.setItemAsync("access_usertoken", data.access_usertoken);
-  //   await SecureStore.setItemAsync("userInfo", JSON.stringify(data.userInfo));
-  //   setUserInfo(data.userInfo);
-  //   setUserToken(data.access_usertoken);
-  //   console.warn("mes infos user", userInfo);
-  //   console.warn("monUsertoken", data.access_usertoken);
-
-  //   setIsLoading(false);
-  //   return true;
-  // } catch (error) {
-  //   console.error(error);
-  //   setIsLoading(false);
-  //   return false;
-  // }
-  // };
-
   return (
     <AuthContext.Provider
       value={{

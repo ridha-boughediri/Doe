@@ -36,7 +36,6 @@ const CustomDrawer = (props) => {
               style={{
                 color: "red",
                 fontSize: 15,
-                // fontFamily: "Roboto-Medieum",
               }}
             >
               {userInfo ? userInfo.firstname : "test"}

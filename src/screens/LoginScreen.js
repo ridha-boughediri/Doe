@@ -15,8 +15,8 @@ import { AuthContext } from "../Context/AutContext";
 const LoginScreen = ({ navigation }) => {
   const { test, connexion } = useContext(AuthContext);
 
-  const [email, setEmail] = useState("ridha@gmail.com");
-  const [password, setPassword] = useState("ridha");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rightIcon, setRightIcon] = useState("eye");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
 
