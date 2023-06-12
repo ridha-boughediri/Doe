@@ -1,6 +1,7 @@
 // import React, { useState, useEffect, useContext } from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState, useContext } from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+
 import {
   View,
   Text,
@@ -17,55 +18,57 @@ const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rightIcon, setRightIcon] = useState("eye");
-  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const handlePasswordVisibility = () => {
-    if (rightIcon === "eye") {
-      setRightIcon("eye-off");
-      setPasswordVisibility(!passwordVisibility);
-    } else if (rightIcon === "eye-off") {
-      setRightIcon("eye");
-      setPasswordVisibility(!passwordVisibility);
-    }
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
+
+  // const handlePasswordVisibility = () => {
+  //   if (rightIcon === "eye") {
+  //     setRightIcon("eye-off");
+  //     setPasswordVisibility(!passwordVisibility);
+  //   } else if (rightIcon === "eye-off") {
+  //     setRightIcon("eye");
+  //     setPasswordVisibility(!passwordVisibility);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <Image
-        source={{
-          uri: "https://media.giphy.com/media/nFajf45jOVILGDMY9F/giphy.gif",
-        }}
-        style={styles.backgroundImage}
+        source={require("../../assets/logo-white.png")}
+        style={styles.logo}
       />
-      {/* <Text style={styles.linkText}>Mot de passe oublié</Text> */}
-      <Text style={styles.headTxt}>
-        Connectez-vous pour avoir accès aux espaces de chat !
-        {/* <Text style={styles.linkText}>{test}</Text> */}
-      </Text>
+      <Text style={styles.title}>Connexion</Text>
 
       <TextInput
         style={styles.input}
-        value={email}
-        onChangeText={setEmail}
         placeholder="Email"
-        placeholderTextColor={"white"}
-        autoCapitalize="none"
-        keyboardType="email-address"
+        onChangeText={setEmail}
+        value={email}
       />
-      <View style={styles.pass}>
+
+      <View style={styles.passwordInputContainer}>
         <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
+          style={styles.passwordInput}
           placeholder="Mot de passe"
-          placeholderTextColor={"white"}
-          secureTextEntry={passwordVisibility}
+          secureTextEntry={passwordVisible}
+          onChangeText={setPassword}
+          value={password}
         />
-        <Pressable style={styles.icon} onPress={handlePasswordVisibility}>
-          <MaterialCommunityIcons name={rightIcon} size={22} color="#fbb034" />
-        </Pressable>
+        <TouchableOpacity
+          style={styles.passwordVisibilityIcon}
+          onPress={togglePasswordVisibility}
+        >
+          <MaterialIcons
+            name={passwordVisible ? "visibility" : "visibility-off"}
+            size={24}
+            color="#888"
+          />
+        </TouchableOpacity>
       </View>
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => connexion(email, password)}
@@ -91,84 +94,66 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
   },
-  headTxt: {
-    marginHorizontal: 100,
-    marginVertical: 50,
-    // marginTop: "50%",
-    // marginBottom: "50%",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    color: "white",
-    fontSize: 20,
-    marginTop: "35%",
-    // marginBottom: "35%",
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
   },
-
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
   input: {
-    width: "100%",
-    alignItems: "center",
-    padding: 10,
-    marginBottom: 10,
-    marginTop: 10,
+    width: "80%",
+    height: 40,
+    borderColor: "#ccc",
     borderWidth: 1,
-    borderColor: "#fbb034",
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  passwordInputContainer: {
+    width: "80%",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    height: 40,
+    borderColor: "#0E64D2",
+    borderWidth: 1,
     borderRadius: 15,
+    paddingHorizontal: 40,
     textAlign: "center",
-    color: "white",
+    color: "black",
   },
-
-  button: {
-    backgroundColor: "#fbb034",
+  passwordVisibilityIcon: {
+    position: "absolute",
+    right: 10,
     padding: 10,
-    borderRadius: 10,
-    width: "100%",
+  },
+  button: {
+    width: "80%",
+    height: 40,
+    backgroundColor: "#0E64D2",
+    borderRadius: 5,
+    justifyContent: "center",
     alignItems: "center",
   },
-
   buttonText: {
-    color: "#fff",
+    color: "black",
+    fontWeight: "bold",
   },
-
-  linksContainer: {
-    flexDirection: "row",
-    marginTop: 50,
-    marginBottom: 50,
-    justifyContent: "space-between",
-    width: "100%",
-  },
-
-  link: {
-    alignItems: "center",
-  },
-
   linkText: {
-    color: "#fbb034",
-  },
-
-  pass: {
-    width: "100%",
-    flexDirection: "row",
-  },
-
-  icon: {
     marginTop: 20,
-    marginLeft: -30,
+    color: "#0E64D2",
+    textDecorationLine: "underline",
   },
 });
+
 export default LoginScreen;

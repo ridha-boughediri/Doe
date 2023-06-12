@@ -19,8 +19,8 @@ import AnotherTabScreen from "../screens/AnotherTabScreen";
 import AnnuaireScreen from "../screens/AnnuaireScreen";
 import UploadImageScreen from "../screens/UploadImageScreen";
 import ChatbotScreen from "../screens/ChatbotScreen";
-import GeneralScreen from "../screens/GeneralScreen";
 import { SalonScreen } from "../screens/SalonScreen";
+// import GeneralScreen from "../screens/GeneralScreen";
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,7 +34,7 @@ const ProfileStack = () => {
       }}
     >
       <Tab.Screen
-        name="Profil"
+        name="Compte"
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -46,6 +46,7 @@ const ProfileStack = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="photo"
         component={UploadImageScreen}
@@ -71,6 +72,8 @@ const ProfileStack = () => {
 
 const HomeTab = () => {
   return (
+    //
+
     <Tab.Navigator
       screenOptions={{
         activeTintColor: "blue",
@@ -78,11 +81,11 @@ const HomeTab = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Mes infos"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <AntDesign name="home" size={size} color={color} />
+            <AntDesign name="table" size={size} color={color} />
           ),
         }}
       />
@@ -116,7 +119,7 @@ const MessageTab = () => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen
+      {/* <Tab.Screen
         name="messages"
         component={MessagesScreen}
         options={{
@@ -124,8 +127,8 @@ const MessageTab = () => {
             <MaterialIcons name="textsms" size={size} color={color} />
           ),
         }}
-      />
-      <Tab.Screen
+      /> */}
+      {/* <Tab.Screen
         name="General"
         component={GeneralScreen}
         options={{
@@ -133,7 +136,7 @@ const MessageTab = () => {
             <Entypo name="chat" size={size} color={color} />
           ),
         }}
-      />
+      /> */}
 
       <Tab.Screen
         name="Salon"
@@ -152,7 +155,7 @@ const AppStack = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}>
       <Drawer.Screen
-        name="Accueil"
+        name="Dashboard"
         component={HomeTab}
         options={{
           drawerIcon: ({ color, size }) => (
@@ -160,6 +163,7 @@ const AppStack = () => {
           ),
         }}
       />
+
       <Drawer.Screen
         name="Messages"
         component={MessageTab}

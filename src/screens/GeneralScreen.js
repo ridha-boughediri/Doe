@@ -1,61 +1,105 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  View,
+  TextInput,
+  Button,
+  FlatList,
+  Text,
+  StyleSheet,
+} from "react-native";
 import io from "socket.io-client";
-import { View, Text, TextInput, Button, FlatList } from "react-native";
+import { request } from "../../service/request";
+import * as SecureStore from "expo-secure-store";
+import jwt from "jwt-decode";
+import { AuthContext } from "../Context/AutContext";
+import { BASE_URL } from "../config";
 
-// import { AuthContext } from "./AuthContext";
+const GeneralScreen = () => {
+  const { userInfo } = useContext(AuthContext);
 
-const socket = io("http://localhost:8888"); // Remplacez l'URL par votre propre URL de serveur Socket.io
+  const yourRef = useRef(null);
 
-const ChatScreen = () => {
-  // const { userInfo } = useContext(AuthContext);
-
-  // const [messages, setMessages] = useState([]);
-  // const [content, setContent] = useState("");
-  // const [userId, setUserId] = useState(userInfo.userId);
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  // const socket = io("http://10.10.25.195:8888", { transports: ["websocket"] });
 
   // useEffect(() => {
-  //   socket.on("chat", (message) => {
-  //     setMessages((prevMessages) => [...prevMessages, message]);
+  //   socket.on("message", (data) => {
+  //     console.log(`Received message: ${data}`);
+  //     setMessages((messages) => [...messages, data]);
   //   });
-
+  //   request("messages/user", "get", "").then((response) => {
+  //     const values = response.data.map((message) => {
+  //       return { content: message.content, user_id: message.user.login };
+  //     });
+  //     setMessages(values);
+  //   });
   //   return () => {
-  //     socket.off("chat");
+  //     socket.disconnect();
   //   };
   // }, []);
-
-  // const handleSendMessage = () => {
-  //   const message = {
-  //     content: content,
-  //     userId: userId,
-  //   };
-
-  //   socket.emit("chat", message);
-
-  //   setContent("");
-  // };
-
-  // const renderMessages = () => {
-  //   return messages.map((message, index) => (
-  //     <div key={index}>
-  //       <p>{message.content}</p>
-  //       <p>Sender: {message.userId}</p>
-  //     </div>
-  //   ));
+  // const handleSend = async () => {
+  //   if (socket) {
+  //     console.log(`Sending message: ${message}`);
+  //     var token = await SecureStore.getItemAsync("access_token");
+  //     var decoded = jwt(token);
+  //     const mess = {
+  //       content: message,
+  //       user_id: decoded.username,
+  //     };
+  //     request("messages/", "post", { content: message, user_id: decoded.id })
+  //       .then((response) => {
+  //         socket.emit("message", mess);
+  //       })
+  //       .catch((err) => {
+  //         alert(err.response.data.message);
+  //       });
+  //     setMessage("");
+  //   }
   // };
 
   return (
-    <View>
-      <Text>Chat</Text>
-      {/* <View>{renderMessages()}</View>
-      <TextInput
-        type="text"
-        placeholder="Message"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <button onClick={handleSendMessage}>Send</button> */}
+    <View style={styles.container}>
+      <Text style={styles.message}>Messages</Text>
     </View>
   );
 };
 
-export default ChatScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  list: {
+    flex: 1,
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+  },
+  message: {
+    padding: 10,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  userId: {
+    padding: 5,
+    fontSize: 14,
+    color: "gray",
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+    marginRight: 10,
+  },
+});
+
+export default GeneralScreen;

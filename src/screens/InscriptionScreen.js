@@ -2,35 +2,27 @@ import React from "react";
 import {
   View,
   Text,
-  SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
   TextInput,
   Image,
 } from "react-native";
 import { useState } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../Context/AutContext";
 import { BASE_URL } from "../config";
 import axios from "axios";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const InscriptionScreen = ({ navigation }) => {
-  BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [login, setLogin] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const { test } = useContext(AuthContext);
-
-  const [alertos, setAlertos] = useState({
-    isOpen: false,
-    type: "",
-    message: "",
-  });
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const handleSignup = async () => {
     try {
@@ -57,94 +49,71 @@ const InscriptionScreen = ({ navigation }) => {
     }
   };
 
+  const goToLoginScreen = () => {
+    navigation.navigate("Login");
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Image
-        source={{
-          uri: "https://media.giphy.com/media/tYiXuzR2KdbiCmSI5n/giphy.gif",
-        }}
-        style={styles.backgroundImage}
+        source={require("../../assets/logo-white.png")}
+        style={styles.logo}
       />
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.headTxt}>Créez un compte</Text>
+      <Text style={styles.title}>Inscription</Text>
 
-          <Text style={{ color: "white", fontSize: 14 }}>
-            Pour discuter de sports américains avec des passionés !
-          </Text>
-          <Text style={{ color: "white", fontSize: 14 }}> {test}</Text>
+      <TextInput
+        style={styles.input}
+        value={lastname}
+        onChangeText={(v) => setLastname(v)}
+        placeholder="Nom"
+        placeholderTextColor={"white"}
+      />
 
-          <View style={styles.form}>
-            <TextInput
-              style={styles.input}
-              value={lastname}
-              onChangeText={(v) => setLastname(v)}
-              iconName="account-outline"
-              placeholder="Prénom"
-              placeholderTextColor={"white"}
-            />
+      <TextInput
+        style={styles.input}
+        placeholder="Prénom"
+        onChangeText={(v) => setFirstname(v)}
+        value={firstname}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        onChangeText={(v) => setEmail(v)}
+        value={email}
+      />
+      <TextInput
+        style={styles.input}
+        value={login}
+        onChangeText={(v) => setLogin(v)}
+        placeholder="Login"
+      />
+      <View style={styles.passwordInputContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Mot de passe"
+          secureTextEntry={passwordVisible}
+          onChangeText={(v) => setPassword(v)}
+          value={password}
+        />
+        <TouchableOpacity
+          style={styles.passwordVisibilityIcon}
+          onPress={togglePasswordVisibility}
+        >
+          <MaterialIcons
+            name={passwordVisible ? "visibility" : "visibility-off"}
+            size={24}
+            color="#888"
+          />
+        </TouchableOpacity>
+      </View>
 
-            <TextInput
-              style={styles.input}
-              value={firstname}
-              onChangeText={(v) => setFirstname(v)}
-              iconName="account-outline"
-              placeholder="Nom"
-              placeholderTextColor={"white"}
-            />
+      <TouchableOpacity style={styles.button} onPress={handleSignup}>
+        <Text style={styles.buttonText}>S'inscrire</Text>
+      </TouchableOpacity>
 
-            <TextInput
-              style={styles.input}
-              value={login}
-              onChangeText={(v) => setLogin(v)}
-              iconName="account-box-outline"
-              placeholder="Login"
-              placeholderTextColor={"white"}
-            />
-
-            <TextInput
-              style={styles.input}
-              iconName="email-outline"
-              placeholder="E-mail"
-              placeholderTextColor={"white"}
-              value={email}
-              onChangeText={(v) => setEmail(v)}
-            />
-
-            <TextInput
-              style={styles.input}
-              iconName="lock-outline"
-              placeholder="Mot de passe"
-              placeholderTextColor={"white"}
-              isPassword={true}
-              value={password}
-              onChangeText={(v) => setPassword(v)}
-            />
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleSignup()}
-            >
-              <Text
-                style={{
-                  fontSize: 11,
-                  textAlign: "center",
-                  fontWeight: "bold",
-                }}
-              >
-                Inscription
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.footTxt}>
-            <Text style={{ color: "white" }}>Vous avez déjà un compte ? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={{ color: "#fbb034" }}>Connectez-vous !</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
+      <TouchableOpacity onPress={goToLoginScreen}>
+        <Text style={styles.linkText}>Déjà inscrit ? Connectez-vous ici</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -152,63 +121,63 @@ const InscriptionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    // padding: 20,
-    // backgroundColor: "black",
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
   },
-
-  headTxt: {
-    color: "white",
-    marginTop: 20,
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
+  },
+  title: {
     fontSize: 24,
     fontWeight: "bold",
-    // fontFamily: 'Copperplate',
+    marginBottom: 20,
   },
-
-  form: {
-    width: "100%",
-    marginTop: 20,
-  },
-
   input: {
-    width: "100%",
-    alignItems: "center",
-    padding: 10,
-    marginBottom: 10,
-    marginTop: 10,
+    width: "80%",
+    height: 40,
+    borderColor: "#ccc",
     borderWidth: 1,
-    borderColor: "#fbb034",
-    borderRadius: 15,
-    textAlign: "center",
-    color: "white",
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
-
-  button: {
-    width: "100%",
-    padding: 10,
-    backgroundColor: "#fbb034",
-    marginBottom: 50,
-    marginTop: 50,
-    borderWidth: 2,
-    borderRadius: 10,
-  },
-
-  footTxt: {
+  passwordInputContainer: {
+    width: "80%",
     flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 40,
+  },
+  passwordVisibilityIcon: {
+    position: "absolute",
+    right: 10,
+    padding: 10,
+  },
+  button: {
+    width: "80%",
+    height: 40,
+    backgroundColor: "#0E64D2",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  linkText: {
+    marginTop: 20,
+    color: "#0E64D2",
+    textDecorationLine: "underline",
   },
 });
 
