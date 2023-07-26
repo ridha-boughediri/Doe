@@ -19,9 +19,9 @@ const ProfileScreen = () => {
         style={styles.profileImage}
       />
       <Text style={styles.profileName}>
-        {userInfo ? userInfo.lastname : "test"}
-        {userInfo ? userInfo.firstname : "test"}
-        {userInfo ? userInfo.login : "test"}
+        {userInfo ? userInfo.username : "test"}
+      </Text>
+      <Text style={styles.profileName}>
         {userInfo ? userInfo.email : "test"}
       </Text>
       <Text style={styles.profileBio}>

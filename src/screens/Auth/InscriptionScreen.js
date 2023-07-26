@@ -55,7 +55,12 @@ const InscriptionScreen = ({ navigation }) => {
         alert("Erreur: " + data.message);
       }
     } catch (error) {
-      alert("Erreur: Une erreur est survenue.");
+      if (error.response && error.response.status === 409) {
+        alert("Erreur: L'email ou le login est déjà utilisé. Veuillez en choisir un autre.");
+      } else {
+        console.log(error);
+        alert("Erreur: Une erreur est survenue.");
+      }
     }
   };
 

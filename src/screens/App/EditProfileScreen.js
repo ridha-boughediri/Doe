@@ -4,45 +4,58 @@ import { AuthContext } from "../../Context/AuthContext";
 import { BASE_URL } from "../../config";
 import axios from "axios";
 
-const EditProfileScreen = () => {
+const EditProfileScreen = ({ navigation }) => {
   const { userInfo, userToken } = useContext(AuthContext);
-  console.log("userInfo", userInfo);
-  console.log("userToken", userToken);
 
   // Use useEffect to update state when userInfo changes
   useEffect(() => {
-    setEmail(userInfo.email);
     setLastname(userInfo.lastname);
     setFirstname(userInfo.firstname);
-    setLogin(userInfo.login);
+    setUsername(userInfo.username);
   }, [userInfo]);
 
-  const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState("");
   const [lastname, setLastname] = useState(userInfo.lastname);
   const [firstname, setFirstname] = useState(userInfo.firstname);
-  const [login, setLogin] = useState(userInfo.login);
+  const [username, setUsername] = useState(userInfo.username);
 
   const handleUpdateProfile = () => {
+     // verification des inputes 
+     if (!lastname.trim()) {
+      alert('Rentrer votre nom');
+      return;
+    }
+
+    if (!firstname.trim()) {
+      alert('Rentrer votre prenom ');
+      return;
+    }
+    if (!username.trim()) {
+      alert('Rentrer votre login ');
+      return;
+    }
+    if (!password.trim()) {
+      alert('Rentrer votre mot de passe ');
+      return;
+    }
     const userData = {
       lastname: lastname,
       firstname: firstname,
-      login: login,
-      email: email,
+      username: username,
       password: password,
     };
 
     const userId = userInfo.id;
     const token = userToken;
 
-    console.log("userData", userData);
 
     axios
       .patch(`${BASE_URL}/users/${userId}`, userData, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log("Profile updated successfully", response.data);
+        alert(response.data.message);
+        navigation.navigate("Compte");
       })
       .catch((error) => {
         console.error("Error updating profile", error);
@@ -71,18 +84,10 @@ const EditProfileScreen = () => {
 
       <TextInput
         style={styles.input}
-        value={login}
-        onChangeText={setLogin}
+        value={username}
+        onChangeText={setUsername}
         placeholder="Login"
         placeholderTextColor="black"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="E-mail"
-        placeholderTextColor="black"
-        value={email}
-        onChangeText={setEmail}
       />
 
       <TextInput
