@@ -1,4 +1,4 @@
-export const BASE_URL = "http://10.10.30.125:8888";
+export const BASE_URL = "http://10.10.13.220:8888";
 export const URL_USER = `${BASE_URL}/`;
 
 // 10.10.13.220 plateforme
