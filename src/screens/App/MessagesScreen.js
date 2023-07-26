@@ -47,8 +47,7 @@ const MessageScreen = () => {
 
           return { content: message.content, user_id: message.user.login }
       })
-      console.log(values)
-      setMessages(values)
+     setMessages(values)
       })
       .catch((error) => {
         console.error("Error fetching messages:", error);
@@ -57,6 +56,20 @@ const MessageScreen = () => {
   
 
   const sendMessage = () => {
+    // // console.log(`Sending message: ${message}`);
+    // var token = await SecureStore.getItemAsync('access_token');
+    // var decoded = jwt(token);
+    // const mess = {
+    //     'content': message,
+    //     'user_id': decoded.username
+    // }
+    // request('messages/', 'post', { "content": message, 'user_id': decoded.id })
+    // .then(response=>{
+    //     socket.emit('message', mess);
+    // }).catch(err=>{
+    //     alert(err.response.data.message)
+    // })
+    // setMessage('');
     // Replace 'your_server_url' with the actual URL of your Socket.io server
     const socket = io.connect("http://10.10.30.125:8888");
     socket.emit("message", { text: messageInput });
@@ -70,7 +83,7 @@ const MessageScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.messageContainer}>
+      <ScrollView style={styles.messageContainer}>{console.log(messages)}
         {messages.map((message, index) => (
           <View
             key={index}
