@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import io from "socket.io-client";
 import axios from "axios";
+import { AuthContext } from "../../Context/AuthContext";
 
 const MessageScreen = () => {
+  const { userInfo } = useContext(AuthContext);
+  const Login = userInfo?.login;
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
 
@@ -33,7 +36,7 @@ const MessageScreen = () => {
   useEffect(() => {
     // Fetch initial messages from the server using Axios
     axios
-      .get("your_server_url/messages")
+      .get("/messages")
       .then((response) => {
         setMessages(response.data);
       })
@@ -63,6 +66,9 @@ const MessageScreen = () => {
             key={index}
             style={message.sentByUser ? styles.userMessage : styles.botMessage}
           >
+            <Text style={styles.username}>
+              {message.sentByUser ? userInfo.login : "Bot"}
+            </Text>
             <Text style={styles.messageText}>{message.text}</Text>
           </View>
         ))}
@@ -74,7 +80,7 @@ const MessageScreen = () => {
           value={messageInput}
           onChangeText={setMessageInput}
         />
-        <Button title="Send" onPress={sendMessage} />
+        <Button title="Envoi" onPress={sendMessage} />
       </View>
     </View>
   );
@@ -121,6 +127,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginRight: 10,
+  },
+  username: {
+    fontSize: 12,
+    marginBottom: 5,
+    color: "gray",
   },
 });
 

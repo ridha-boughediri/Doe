@@ -7,3 +7,4 @@ export const URL_USER = `${BASE_URL}/`;
 
 // export const BASE_URL = "http://ridhaboughediri.fr:8888";
 // export const URL_USER = `${BASE_URL}/`;
+// export const URL_USER = `${BASE_URL}/user`;
