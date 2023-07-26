@@ -10,6 +10,7 @@ import {
 import io from "socket.io-client";
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
+import { BASE_URL } from "../../config";
 
 const MessageScreen = () => {
   const { userInfo } = useContext(AuthContext);
@@ -19,7 +20,7 @@ const MessageScreen = () => {
 
   useEffect(() => {
     // Replace 'your_server_url' with the actual URL of your Socket.io server
-    const socket = io.connect("http://10.10.13.220:8888");
+    const socket = io.connect("http://10.10.30.125:8888");
 
     // Event listener for receiving messages
     socket.on("message", (data) => {
@@ -36,20 +37,29 @@ const MessageScreen = () => {
   useEffect(() => {
     // Fetch initial messages from the server using Axios
     axios
-      .get("/messages")
+      .get(`${BASE_URL}/messages/user`)
       .then((response) => {
-        setMessages(response.data);
+       
+
+        // Assuming response.data contains the actual messages
+  
+        const values = response.data.data.map(message => {
+
+          return { content: message.content, user_id: message.user.login }
+      })
+      console.log(values)
+      setMessages(values)
       })
       .catch((error) => {
         console.error("Error fetching messages:", error);
       });
   }, []);
+  
 
   const sendMessage = () => {
     // Replace 'your_server_url' with the actual URL of your Socket.io server
-    const socket = io.connect("http://10.10.13.220:8888");
+    const socket = io.connect("http://10.10.30.125:8888");
     socket.emit("message", { text: messageInput });
-
     // Add the message immediately to the state to display it without waiting for the server's response
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -67,9 +77,9 @@ const MessageScreen = () => {
             style={message.sentByUser ? styles.userMessage : styles.botMessage}
           >
             <Text style={styles.username}>
-              {message.sentByUser ? userInfo.login : "Bot"}
+              {message.user_id}
             </Text>
-            <Text style={styles.messageText}>{message.text}</Text>
+            <Text style={styles.messageText}>{message.content}</Text>
           </View>
         ))}
       </ScrollView>
