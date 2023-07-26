@@ -12,7 +12,7 @@ import {
 import { AuthContext } from "../../Context/AuthContext";
 import { io } from "socket.io-client";
 
-const socket = io(`http://193.168.144.167:8888`);
+const socket = io(`http://10.10.30.125:8888`);
 
 const ChatScreen = () => {
   const { userInfo } = useContext(AuthContext);

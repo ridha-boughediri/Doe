@@ -244,14 +244,11 @@ import ProfileScreen from "../screens/App/ProfileScreen";
 import HomeScreen from "../screens/App/HomeScreen";
 import NotificationScreen from "../screens/App/NotificationScreen";
 import EditProfileScreen from "../screens/App/EditProfileScreen";
-import AnotherTabScreen from "../screens/App/AnotherTabScreen";
 import AnnuaireScreen from "../screens/App/AnnuaireScreen";
 import UploadImageScreen from "../screens/App/UploadImageScreen";
 import ChatScreen from "../screens/App/ChatScreen";
 import MessagesScreen from "../screens/App/MessagesScreen";
 import GeneralScreen from "../screens/App/GeneralScreen";
-import BotScreen from "../screens/App/BotScreen";
-import Bot2Screen from "../screens/App/Bot2Screen";
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -326,7 +323,6 @@ const HomeTab = () => {
       }}
     >
       <Tab.Screen name="Mes infos" component={HomeScreen} />
-      <Tab.Screen name="AnotherTab" component={AnotherTabScreen} />
       <Tab.Screen name="Annuaire" component={AnnuaireScreen} />
     </Tab.Navigator>
   );
@@ -408,28 +404,6 @@ const AppStack = () => {
       <Drawer.Screen
         name="Profil"
         component={ProfileStack}
-        options={{
-          drawerIcon: ({ color, size }) => {
-            let iconName = "person";
-            return <MaterialIcons name={iconName} size={size} color={color} />;
-          },
-        }}
-      />
-
-      <Drawer.Screen
-        name="Bot sportif"
-        component={BotScreen}
-        options={{
-          drawerIcon: ({ color, size }) => {
-            let iconName = "chat-bubble-outline";
-            return <MaterialIcons name={iconName} size={size} color={color} />;
-          },
-        }}
-      />
-
-      <Drawer.Screen
-        name="Bot sportif2"
-        component={Bot2Screen}
         options={{
           drawerIcon: ({ color, size }) => {
             let iconName = "person";
