@@ -14,18 +14,22 @@ import { BASE_URL } from "../../config";
 
 const MessageScreen = () => {
   const { userInfo, userToken } = useContext(AuthContext);
-  const Login = userInfo?.login;
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
 
   useEffect(() => {
     // Replace 'your_server_url' with the actual URL of your Socket.io server
-    const socket = io.connect("http://10.10.13.220:8888");
+    const socket = io.connect("http://10.10.30.125:8888");
 
     // Event listener for receiving messages
     socket.on("message", (data) => {
       // Update the messages state when a new message is received
       setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    // Event listener for socket errors
+    socket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error.message);
     });
 
     // Clean up the socket connection when the component unmounts
@@ -35,12 +39,12 @@ const MessageScreen = () => {
   }, []);
 
   useEffect(() => {
+    
     // Fetch initial messages from the server using Axios
     axios
       .get(`${BASE_URL}/messages/user`)
       .then((response) => {
         // Assuming response.data contains the actual messages
-
         const values = response.data.data.map((message) => {
           return { content: message.content, user_id: message.user.login };
         });
@@ -52,31 +56,37 @@ const MessageScreen = () => {
   }, []);
 
   const sendMessage = () => {
+    const socket = io.connect("http://10.10.30.125:8888");
+    console.log("sendMessage function called");
     const user_id = userInfo?.id;
+    console.log(userInfo)
     const messageData = {
       content: messageInput,
       user_id: user_id,
     };
-
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: messageInput, sentByUser: true },
-    ]);
+    const messageOnScreen={
+      content:messageInput,
+      user_id:userInfo.username
+    }
+    console.log('Sending message:', messageData); // Log the message data before sending
 
     axios
-      .post("http://10.10.13.220:8888/messages", messageData, {
+      .post("http://10.10.30.125:8888/messages", messageData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
-        },
+        }
       })
       .then((response) => {
-        // Successfully sent the message to the server
+     
+        console.log("Response data:", response.data);
+        socket.emit('message', messageOnScreen);
+                // Successfully sent the message to the server
         // You may handle the response if needed
       })
       .catch((error) => {
+        console.log('coucou')
         console.error("Error sending message:", error);
         // If there was an error, revert the optimistic update
-        setMessages((prevMessages) => prevMessages.slice(0, -1));
       });
 
     setMessageInput("");
@@ -85,7 +95,6 @@ const MessageScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.messageContainer}>
-        {console.log(messages)}
         {messages.map((message, index) => (
           <View
             key={index}
