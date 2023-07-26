@@ -6,12 +6,8 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Image
-        // https://media.giphy.com/media/L66GdrqzbfhnsaDanq/giphy.gif
-        // source={require("../../assets/istockphoto-1067918034-612x612-removebg-preview.png")}
-        source={{
-          uri: "https://media.giphy.com/media/dWryx4eltxMMEXOIzi/giphy.gif",
-        }}
-        style={{ width: 300, height: 300 }}
+        source={require("../../../assets/logo-white.png")}
+        style={{ width: 200, height: 200, borderRadius: 150 }}
       />
       <Text
         style={{
@@ -27,16 +23,32 @@ const WelcomeScreen = ({ navigation }) => {
       </Text>
       <View style={{ flexDirection: "row", marginTop: 40 }}>
         <TouchableOpacity
-          style={styles.button}
+          style={[
+            styles.button,
+            { borderColor: "#FBB034", width: 120, height: 40 },
+          ]}
           onPress={() => navigation.navigate("Inscription")}
         >
-          <Text style={styles.buttonText}>Inscription</Text>
+          <Text style={[styles.buttonText, { color: "white" }]}>
+            Inscription
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
+          style={[
+            styles.button2,
+            {
+              backgroundColor: "#FFF",
+              borderWidth: 1,
+              borderColor: "#FBB034",
+              width: 120,
+              height: 40,
+            },
+          ]}
           onPress={() => navigation.navigate("Login")}
         >
-          <Text style={styles.buttonText}>Connexion</Text>
+          <Text style={[styles.buttonText2, { color: "#FBB034" }]}>
+            Connexion
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -46,12 +58,27 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = {
   button: {
     padding: 10,
-    backgroundColor: "#0E64D2",
+    backgroundColor: "#FBB034",
     borderRadius: 5,
     marginRight: 10,
+    alignItems: "center",
+    borderRadius: 20,
   },
   buttonText: {
     color: "#fff",
+    fontWeight: "bold",
+  },
+
+  button2: {
+    padding: 10,
+    backgroundColor: "#FBB034",
+    borderRadius: 5,
+    marginRight: 10,
+    alignItems: "center",
+    borderRadius: 20,
+  },
+  buttonText2: {
+    color: "white",
     fontWeight: "bold",
   },
 };

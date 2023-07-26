@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Button, Image, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 
 const UploadImageScreen = () => {
   const [image, setImage] = useState(null);

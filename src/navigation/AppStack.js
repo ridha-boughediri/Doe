@@ -1,26 +1,257 @@
+// import React from "react";
+// import { createDrawerNavigator } from "@react-navigation/drawer";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+// import { EvilIcons } from "@expo/vector-icons";
+
+// import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+// import CustomDrawer from "../components/CustomDrawer";
+// import ProfileScreen from "../screens/App/ProfileScreen";
+// import HomeScreen from "../screens/App/HomeScreen";
+// import NotificationScreen from "../screens/App/NotificationScreen";
+// import EditProfileScreen from "../screens/App/EditProfileScreen";
+// import AnotherTabScreen from "../screens/App/AnotherTabScreen";
+// import AnnuaireScreen from "../screens/App/AnnuaireScreen";
+// import UploadImageScreen from "../screens/App/UploadImageScreen";
+// import ChatScreen from "../screens/App/ChatScreen";
+// import MessagesScreen from "../screens/App/MessagesScreen";
+// import GeneralScreen from "../screens/App/GeneralScreen";
+// import BotScreen from "../screens/App/BotScreen";
+// import Bot2Screen from "../screens/App/Bot2Screen";
+
+// const Drawer = createDrawerNavigator();
+// const Tab = createBottomTabNavigator();
+
+// const ProfileStack = () => {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={({ route }) => ({
+//         tabBarIcon: ({ color, size }) => {
+//           let iconName;
+
+//           if (route.name === "Compte") {
+//             iconName = "face-man-profile";
+//             return (
+//               <MaterialCommunityIcons
+//                 name={iconName}
+//                 size={size}
+//                 color={color}
+//               />
+//             );
+//           } else if (route.name === "photo") {
+//             iconName = "image";
+//             return <EvilIcons name={iconName} size={size} color={color} />;
+//           } else if (route.name === "Modifier") {
+//             iconName = "edit";
+//             return <Entypo name={iconName} size={size} color={color} />;
+//           }
+//           return null;
+//         },
+//       })}
+//       screensOptions={{
+//         activeTintColor: "#535763",
+//         inactiveTintColor: "gray",
+//         tabStyle: {
+//           backgroundColor: "#D9821D",
+//         },
+//       }}
+//     >
+//       <Tab.Screen name="Compte" component={ProfileScreen} />
+//       <Tab.Screen name="photo" component={UploadImageScreen} />
+//       <Tab.Screen name="Modifier" component={EditProfileScreen} />
+//     </Tab.Navigator>
+//   );
+// };
+
+// const HomeTab = () => {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={({ route }) => ({
+//         tabBarIcon: ({ color, size }) => {
+//           let iconName;
+
+//           if (route.name === "Mes infos") {
+//             iconName = "table";
+//             return <AntDesign name={iconName} size={size} color={color} />;
+//           } else if (route.name === "AnotherTab") {
+//             iconName = "table";
+//             return <AntDesign name={iconName} size={size} color={color} />;
+//           } else if (route.name === "Annuaire") {
+//             iconName = "address-book-o";
+//             return <FontAwesome name={iconName} size={size} color={color} />;
+//           }
+//           return null;
+//         },
+//       })}
+//       tabBarOptions={{
+//         activeTintColor: "#535763",
+//         inactiveTintColor: "gray",
+//         tabBarStyle: {
+//           backgroundColor: "#D9821D", // Mettez la couleur jaune souhaitée ici
+//         },
+//       }}
+//     >
+//       <Tab.Screen name="Mes infos" component={HomeScreen} />
+//       <Tab.Screen name="AnotherTab" component={AnotherTabScreen} />
+//       <Tab.Screen name="Annuaire" component={AnnuaireScreen} />
+//     </Tab.Navigator>
+//   );
+// };
+
+// const MessageTab = () => {
+//   return (
+//     <Tab.Navigator
+//       screenOptions={({ route }) => ({
+//         tabBarIcon: ({ color, size }) => {
+//           let iconName;
+
+//           if (route.name === "Salon") {
+//             iconName = "forum";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           } else if (route.name === "General") {
+//             iconName = "chat";
+//             return <Entypo name={iconName} size={size} color={color} />;
+//           } else if (route.name === "Messages") {
+//             iconName = "textsms";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           }
+//           return null;
+//         },
+//       })}
+//       screensOptions={{
+//         activeTintColor: "#535763",
+//         inactiveTintColor: "gray",
+//         tabStyle: {
+//           backgroundColor: "#D9821D",
+//         },
+//       }}
+//     >
+//       <Tab.Screen name="General" component={GeneralScreen} />
+//       <Tab.Screen name="Salon" component={ChatScreen} />
+//       <Tab.Screen name="Messages" component={MessagesScreen} />
+//     </Tab.Navigator>
+//   );
+// };
+
+// const AppStack = () => {
+//   return (
+//     <Drawer.Navigator
+//       drawerContent={(props) => <CustomDrawer {...props} />}
+//       tabBarOptions={{
+//         drawerIcon: ({ color, size }) => {
+//           let iconName;
+
+//           if (props.route.name === "Dashboard") {
+//             iconName = "dashboard";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           } else if (props.route.name === "Messages") {
+//             iconName = "chat";
+//             return <Entypo name={iconName} size={size} color={color} />;
+//           } else if (props.route.name === "Profil") {
+//             iconName = "person";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           } else if (props.route.name === "Bot sportif") {
+//             iconName = "chat";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           } else if (props.route.name === "Notifications") {
+//             iconName = "notifications";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           }
+//           return null;
+//         },
+//       }}
+//     >
+//       <Drawer.Screen
+//         name="Dashboard"
+//         component={HomeTab}
+//         options={{
+//           drawerIcon: ({ color, size }) => {
+//             let iconName = "dashboard";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           },
+//         }}
+//       />
+
+//       <Drawer.Screen
+//         name="Messages"
+//         component={MessageTab}
+//         options={{
+//           drawerIcon: ({ color, size }) => {
+//             let iconName = "chat";
+//             return <Entypo name={iconName} size={size} color={color} />;
+//           },
+//         }}
+//       />
+
+//       <Drawer.Screen
+//         name="Profil"
+//         component={ProfileStack}
+//         options={{
+//           drawerIcon: ({ color, size }) => {
+//             let iconName = "person";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           },
+//         }}
+//       />
+
+//       <Drawer.Screen
+//         name="Bot sportif"
+//         component={BotScreen}
+//         options={{
+//           drawerIcon: ({ color, size }) => {
+//             let iconName = "chat-bubble-outline";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           },
+//         }}
+//       />
+
+//       <Drawer.Screen
+//         name="Bot sportif2"
+//         component={Bot2Screen}
+//         options={{
+//           drawerIcon: ({ color, size }) => {
+//             let iconName = "person";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           },
+//         }}
+//       />
+
+//       <Drawer.Screen
+//         name="Notifications"
+//         component={NotificationScreen}
+//         options={{
+//           drawerIcon: ({ color, size }) => {
+//             let iconName = "notifications";
+//             return <MaterialIcons name={iconName} size={size} color={color} />;
+//           },
+//         }}
+//       />
+//     </Drawer.Navigator>
+//   );
+// };
+
+// export default AppStack;
+
+import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 
-import {
-  AntDesign,
-  Entypo,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import MessagesScreen from "../screens/MessagesScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import HomeScreen from "../screens/HomeScreen";
-import NotificationScreen from "../screens/NotificationScreen";
+import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomDrawer from "../components/CustomDrawer";
-import EditProfileScreen from "../screens/EditProfileScreen";
-import AnotherTabScreen from "../screens/AnotherTabScreen";
-import AnnuaireScreen from "../screens/AnnuaireScreen";
-import UploadImageScreen from "../screens/UploadImageScreen";
-import ChatbotScreen from "../screens/ChatbotScreen";
-import { SalonScreen } from "../screens/SalonScreen";
-// import GeneralScreen from "../screens/GeneralScreen";
+import ProfileScreen from "../screens/App/ProfileScreen";
+import HomeScreen from "../screens/App/HomeScreen";
+import NotificationScreen from "../screens/App/NotificationScreen";
+import EditProfileScreen from "../screens/App/EditProfileScreen";
+import AnotherTabScreen from "../screens/App/AnotherTabScreen";
+import AnnuaireScreen from "../screens/App/AnnuaireScreen";
+import UploadImageScreen from "../screens/App/UploadImageScreen";
+import ChatScreen from "../screens/App/ChatScreen";
+import MessagesScreen from "../screens/App/MessagesScreen";
+import GeneralScreen from "../screens/App/GeneralScreen";
+import BotScreen from "../screens/App/BotScreen";
+import Bot2Screen from "../screens/App/Bot2Screen";
 
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,85 +259,75 @@ const Tab = createBottomTabNavigator();
 const ProfileStack = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        activeTintColor: "blue",
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === "Compte") {
+            iconName = "face-man-profile";
+            return (
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            );
+          } else if (route.name === "photo") {
+            iconName = "image";
+            return <EvilIcons name={iconName} size={size} color={color} />;
+          } else if (route.name === "Modifier") {
+            iconName = "edit";
+            return <Entypo name={iconName} size={size} color={color} />;
+          }
+          return null;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: "#535763",
         inactiveTintColor: "gray",
+        style: {
+          backgroundColor: "#D9821D", // Mettez la couleur jaune souhaitée ici
+        },
       }}
     >
-      <Tab.Screen
-        name="Compte"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="face-man-profile"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="photo"
-        component={UploadImageScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <EvilIcons name="image" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Modifier"
-        component={EditProfileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Entypo name="edit" size={size} color={color} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Compte" component={ProfileScreen} />
+      <Tab.Screen name="photo" component={UploadImageScreen} />
+      <Tab.Screen name="Modifier" component={EditProfileScreen} />
     </Tab.Navigator>
   );
 };
 
 const HomeTab = () => {
   return (
-    //
-
     <Tab.Navigator
-      screenOptions={{
-        activeTintColor: "blue",
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === "Mes infos") {
+            iconName = "table";
+            return <AntDesign name={iconName} size={size} color={color} />;
+          } else if (route.name === "AnotherTab") {
+            iconName = "table";
+            return <AntDesign name={iconName} size={size} color={color} />;
+          } else if (route.name === "Annuaire") {
+            iconName = "address-book-o";
+            return <FontAwesome name={iconName} size={size} color={color} />;
+          }
+          return null;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: "#535763",
         inactiveTintColor: "gray",
+        style: {
+          backgroundColor: "#D9821D", // Mettez la couleur jaune souhaitée ici
+        },
       }}
     >
-      <Tab.Screen
-        name="Mes infos"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="table" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="AnotherTab"
-        component={AnotherTabScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="table" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Annuaire"
-        component={AnnuaireScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="address-book-o" size={size} color={color} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Mes infos" component={HomeScreen} />
+      <Tab.Screen name="AnotherTab" component={AnotherTabScreen} />
+      <Tab.Screen name="Annuaire" component={AnnuaireScreen} />
     </Tab.Navigator>
   );
 };
@@ -114,53 +335,62 @@ const HomeTab = () => {
 const MessageTab = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        activeTintColor: "blue",
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === "Salon") {
+            iconName = "forum";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          } else if (route.name === "General") {
+            iconName = "chat";
+            return <Entypo name={iconName} size={size} color={color} />;
+          } else if (route.name === "Messages") {
+            iconName = "textsms";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          }
+          return null;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: "#535763",
         inactiveTintColor: "gray",
+        style: {
+          backgroundColor: "#D9821D", // Mettez la couleur jaune souhaitée ici
+        },
       }}
     >
-      {/* <Tab.Screen
-        name="messages"
-        component={MessagesScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="textsms" size={size} color={color} />
-          ),
-        }}
-      /> */}
-      {/* <Tab.Screen
-        name="General"
-        component={GeneralScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Entypo name="chat" size={size} color={color} />
-          ),
-        }}
-      /> */}
-
-      <Tab.Screen
-        name="Salon"
-        component={SalonScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="forum" size={size} color={color} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Messages" component={MessagesScreen} />
+      <Tab.Screen name="General" component={GeneralScreen} />
+      <Tab.Screen name="Salon" component={ChatScreen} />
     </Tab.Navigator>
   );
 };
 
 const AppStack = () => {
   return (
-    <Drawer.Navigator drawerContent={(props) => <CustomDrawer {...props} />}>
+    <Drawer.Navigator
+      drawerContent={(props) => <CustomDrawer {...props} />}
+      drawerStyle={{
+        backgroundColor: "#D9821D", // Mettez la couleur jaune souhaitée ici
+      }}
+      drawerContentOptions={{
+        activeTintColor: "#535763", // Couleur de l'icône lorsqu'il est actif
+        inactiveTintColor: "gray", // Couleur de l'icône lorsqu'il n'est pas actif
+        labelStyle: {
+          fontSize: 16,
+          fontWeight: "bold",
+        },
+      }}
+    >
       <Drawer.Screen
         name="Dashboard"
         component={HomeTab}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <AntDesign name="home" size={size} color={color} />
-          ),
+          drawerIcon: ({ color, size }) => {
+            let iconName = "dashboard";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          },
         }}
       />
 
@@ -168,40 +398,54 @@ const AppStack = () => {
         name="Messages"
         component={MessageTab}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <AntDesign name="message1" size={size} color={color} />
-          ),
+          drawerIcon: ({ color, size }) => {
+            let iconName = "chat";
+            return <Entypo name={iconName} size={size} color={color} />;
+          },
         }}
       />
+
       <Drawer.Screen
         name="Profil"
         component={ProfileStack}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="face-man-profile"
-              size={size}
-              color={color}
-            />
-          ),
+          drawerIcon: ({ color, size }) => {
+            let iconName = "person";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          },
         }}
       />
+
       <Drawer.Screen
         name="Bot sportif"
-        component={ChatbotScreen}
+        component={BotScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <FontAwesome5 name="robot" size={size} color={color} />
-          ),
+          drawerIcon: ({ color, size }) => {
+            let iconName = "chat-bubble-outline";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          },
         }}
       />
+
+      <Drawer.Screen
+        name="Bot sportif2"
+        component={Bot2Screen}
+        options={{
+          drawerIcon: ({ color, size }) => {
+            let iconName = "person";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          },
+        }}
+      />
+
       <Drawer.Screen
         name="Notifications"
         component={NotificationScreen}
         options={{
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="notifications-outline" size={size} color={color} />
-          ),
+          drawerIcon: ({ color, size }) => {
+            let iconName = "notifications";
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          },
         }}
       />
     </Drawer.Navigator>

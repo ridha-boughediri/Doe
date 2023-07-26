@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { AuthContext } from "../Context/AutContext";
+import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
 
 const ProfileScreen = () => {
@@ -15,11 +15,11 @@ const ProfileScreen = () => {
         style={styles.backgroundImage}
       />
       <Image
-        source={require("../../assets/profile.png")}
+        source={require("../../../assets/profile.png")}
         style={styles.profileImage}
       />
       <Text style={styles.profileName}>
-        {userInfo ? userInfo.lastname : "test"}{" "}
+        {userInfo ? userInfo.lastname : "test"}
         {userInfo ? userInfo.firstname : "test"}
         {userInfo ? userInfo.login : "test"}
         {userInfo ? userInfo.email : "test"}
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    // paddingHorizontal: 20,
   },
 
   backgroundImage: {

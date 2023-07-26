@@ -1,41 +1,45 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import { AuthContext } from "../../Context/AuthContext";
 
 function HomeScreen() {
+  const { userToken, userInfo } = useContext(AuthContext);
+
+  console.log("userToken", userToken);
+  console.log("userInfo", userInfo);
+
   return (
     <View style={styles.container}>
       <Image
         style={styles.backgroundImage}
-        // source={require("../../assets/background-superbol.jpg")}
-        source={{
-          uri: "https://media.giphy.com/media/9sqWYjI9M4SkoYBvkJ/giphy.gif",
-        }}
+        source={require("../../../assets/background-superbol.jpg")} // Assuming you have a local image
       />
 
       <View style={styles.overlay}>
         <Text style={styles.title}>
-          Bienvenue sur le chat du sport american
+          Bienvenue sur le chat du sport américain
         </Text>
-        <Text style={styles.subtitle}>Voici les match les plus recents :</Text>
+        <Text style={styles.subtitle}>Voici les matchs les plus récents :</Text>
+
         <View style={styles.exampleContainer}>
           <View style={styles.exampleItem}>
             <Image
               style={styles.exampleIcon}
-              source={{ uri: "https://i.imgur.com/2QK5X9k.png" }}
+              source={require("../../../assets/icon.png")} // Assuming you have a local image
             />
             <Text style={styles.exampleText}>Icônes d'applications</Text>
           </View>
           <View style={styles.exampleItem}>
             <Image
               style={styles.exampleIcon}
-              source={{ uri: "https://i.imgur.com/dRdPJQu.png" }}
+              source={require("../../../assets/icon.png")} // Assuming you have a local image
             />
             <Text style={styles.exampleText}>Widgets</Text>
           </View>
           <View style={styles.exampleItem}>
             <Image
               style={styles.exampleIcon}
-              source={{ uri: "https://i.imgur.com/95aN5bs.png" }}
+              source={require("../../../assets/icon.png")} // Assuming you have a local image
             />
             <Text style={styles.exampleText}>Dock</Text>
           </View>

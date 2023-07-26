@@ -1,13 +1,12 @@
 import React from "react";
 import { useContext } from "react";
-
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { AuthContext } from "../Context/AutContext";
+import { AuthContext } from "../Context/AuthContext";
 
 const CustomDrawer = (props) => {
   const { logout, userInfo } = useContext(AuthContext);
@@ -15,17 +14,14 @@ const CustomDrawer = (props) => {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{ backgroundColor: "#7AC0FF" }}
+        contentContainerStyle={{ backgroundColor: "#D9A41D" }}
       >
-        <ImageBackground
-          source={require("../../assets/backgroundblue.png")}
-          style={{ padding: 20, height: 150 }}
-        >
+        <ImageBackground style={{ padding: 20, height: 150 }}>
           <ImageBackground
             source={require("../../assets/profile.png")}
             style={{
-              height: 80,
-              width: 80,
+              height: 100,
+              width: 100,
               marginBottom: 10,
               borderRadius: 60,
             }}
@@ -46,15 +42,19 @@ const CustomDrawer = (props) => {
       </DrawerContentScrollView>
 
       <View
-        style={{ padding: 20, borderStartWidth: 1, borderTopColor: "#ccc" }}
+        style={{
+          padding: 10,
+          borderTopWidth: 1,
+          borderTopColor: "#D9821D",
+          backgroundColor: "#D9A41D", // Modification de la couleur en jaune
+        }}
       >
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 15 }}>
+        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 5 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <MaterialIcons name="settings" size={24} color="black" />
             <Text
               style={{
                 fontSize: 15,
-                // fontFamily: "Roboto-Medium",
                 marginLeft: 5,
               }}
             >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,18 +7,23 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import { useState } from "react";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 import axios from "axios";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const InscriptionScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [lastname, setLastname] = useState("");
   const [firstname, setFirstname] = useState("");
   const [login, setLogin] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -26,6 +31,11 @@ const InscriptionScreen = ({ navigation }) => {
 
   const handleSignup = async () => {
     try {
+      if (password !== confirmPassword) {
+        alert("Les mots de passe ne correspondent pas.");
+        return;
+      }
+
       // Envoi des informations d'inscription au backend avec Axios
       const response = await axios.post(`${BASE_URL}/users/register`, {
         email,
@@ -42,10 +52,10 @@ const InscriptionScreen = ({ navigation }) => {
         alert("Succès Inscription réussie.");
         navigation.navigate("Login");
       } else {
-        alert("Erreur", data.message);
+        alert("Erreur: " + data.message);
       }
     } catch (error) {
-      alert("Erreur", "Une erreur est survenue.");
+      alert("Erreur: Une erreur est survenue.");
     }
   };
 
@@ -56,44 +66,59 @@ const InscriptionScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../assets/logo-white.png")}
+        source={require("../../../assets/logo-white.png")}
         style={styles.logo}
       />
       <Text style={styles.title}>Inscription</Text>
 
-      <TextInput
-        style={styles.input}
-        value={lastname}
-        onChangeText={(v) => setLastname(v)}
-        placeholder="Nom"
-        placeholderTextColor={"white"}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Prénom"
-        onChangeText={(v) => setFirstname(v)}
-        value={firstname}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={(v) => setEmail(v)}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        value={login}
-        onChangeText={(v) => setLogin(v)}
-        placeholder="Login"
-      />
-      <View style={styles.passwordInputContainer}>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={styles.passwordInput}
+          style={styles.input}
+          value={lastname}
+          onChangeText={(v) => setLastname(v)}
+          placeholder="Nom"
+          placeholderTextColor="#000"
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Prénom"
+          onChangeText={(v) => setFirstname(v)}
+          value={firstname}
+          placeholderTextColor="#000"
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          onChangeText={(v) => setEmail(v)}
+          value={email}
+          placeholderTextColor="#000"
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={login}
+          onChangeText={(v) => setLogin(v)}
+          placeholder="Login"
+          placeholderTextColor="#000"
+        />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
           placeholder="Mot de passe"
           secureTextEntry={passwordVisible}
           onChangeText={(v) => setPassword(v)}
           value={password}
+          placeholderTextColor="#000"
         />
         <TouchableOpacity
           style={styles.passwordVisibilityIcon}
@@ -101,6 +126,29 @@ const InscriptionScreen = ({ navigation }) => {
         >
           <MaterialIcons
             name={passwordVisible ? "visibility" : "visibility-off"}
+            size={24}
+            color="#888"
+          />
+        </TouchableOpacity>
+      </View>
+
+      {/* Champ de confirmation du mot de passe */}
+      <View style={styles.inputContainer}>
+        {/* Champ de confirmation du mot de passe */}
+        <TextInput
+          style={styles.input}
+          placeholder="Confirmer le mot de passe"
+          secureTextEntry={!confirmPasswordVisible}
+          onChangeText={(v) => setConfirmPassword(v)}
+          value={confirmPassword}
+          placeholderTextColor="#000"
+        />
+        <TouchableOpacity
+          style={styles.passwordVisibilityIcon}
+          onPress={toggleConfirmPasswordVisibility}
+        >
+          <MaterialIcons
+            name={confirmPasswordVisible ? "visibility" : "visibility-off"}
             size={24}
             color="#888"
           />
@@ -134,28 +182,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
-  input: {
-    width: "80%",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  passwordInputContainer: {
+  inputContainer: {
     width: "80%",
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
   },
-  passwordInput: {
+  input: {
     flex: 1,
     height: 40,
-    borderColor: "#ccc",
+    borderColor: "#0E64D2",
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 15,
     paddingHorizontal: 40,
+    textAlign: "center",
+    color: "black",
   },
   passwordVisibilityIcon: {
     position: "absolute",
@@ -165,13 +206,13 @@ const styles = StyleSheet.create({
   button: {
     width: "80%",
     height: 40,
-    backgroundColor: "#0E64D2",
-    borderRadius: 5,
+    backgroundColor: "#FBB034",
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: "black",
     fontWeight: "bold",
   },
   linkText: {

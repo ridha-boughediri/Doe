@@ -2,34 +2,33 @@ import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { BASE_URL } from "../config";
-import { set } from "react-native-reanimated";
 import jwtDecode from "jwt-decode";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
-
   const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  const [test, setTest] = useState("je suis un developpeur millionnaires");
+  const [test, setTest] = useState("je suis un développeur millionnaire");
 
-  const connexion = (email, password) => {
+  const login = async (email, password) => {
     setIsLoading(true);
-    axios
-      .post(`${BASE_URL}/auth/login`, { email, password })
-      .then(async (res) => {
-        await SecureStore.setItemAsync("userToken", res.data.access_token);
-        const user = jwtDecode(res.data.access_token);
-        setUserInfo(user);
-        setUserToken(res.data.access_token);
-      })
-      .catch((e) => {
-        console.error("erreur de connexion", e);
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/login`, {
+        email,
+        password,
       });
+      const { access_token } = response.data;
+      await SecureStore.setItemAsync("userToken", access_token);
+      const decodedToken = jwtDecode(access_token);
+      setUserInfo(decodedToken);
+      setUserToken(access_token);
+    } catch (error) {
+      console.error("Erreur de connexion", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logout = async () => {
@@ -37,23 +36,28 @@ const AuthProvider = ({ children }) => {
     try {
       await SecureStore.deleteItemAsync("userToken");
       setUserToken(null);
+      setUserInfo(null);
       // Autres opérations de déconnexion ici, telles que supprimer le jeton de l'état global
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const isLoggedIn = async () => {
     try {
       setIsLoading(true);
-      let userToken = await SecureStore.getItemAsync("userToken");
-      setUserToken(userToken);
-      setIsLoading(false);
-      const user = jwtDecode(userToken);
-      setUserInfo(user);
+      const userToken = await SecureStore.getItemAsync("userToken");
+      if (userToken) {
+        setUserToken(userToken);
+        const decodedToken = jwtDecode(userToken);
+        setUserInfo(decodedToken);
+      }
     } catch (error) {
-      console.log(`isLogged in error ${error}`);
+      console.log(`Erreur lors de la vérification de la connexion : ${error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,8 +72,7 @@ const AuthProvider = ({ children }) => {
         userToken,
         userInfo,
         isLoading,
-        isLoggedIn,
-        connexion,
+        login,
         logout,
       }}
     >
@@ -77,4 +80,5 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
 export default AuthProvider;

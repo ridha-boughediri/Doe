@@ -1,16 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { AuthContext } from "../Context/AutContext";
-import { BASE_URL } from "../config";
+import { AuthContext } from "../../Context/AuthContext";
+import { BASE_URL } from "../../config";
 import axios from "axios";
 
 const EditProfileScreen = () => {
-  const { userInfo } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
+  const { userInfo, userToken } = useContext(AuthContext);
+  console.log("userInfo", userInfo);
+  console.log("userToken", userToken);
+
+  // Use useEffect to update state when userInfo changes
+  useEffect(() => {
+    setEmail(userInfo.email);
+    setLastname(userInfo.lastname);
+    setFirstname(userInfo.firstname);
+    setLogin(userInfo.login);
+  }, [userInfo]);
+
+  const [email, setEmail] = useState(userInfo.email);
   const [password, setPassword] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [login, setLogin] = useState("");
+  const [lastname, setLastname] = useState(userInfo.lastname);
+  const [firstname, setFirstname] = useState(userInfo.firstname);
+  const [login, setLogin] = useState(userInfo.login);
 
   const handleUpdateProfile = () => {
     const userData = {
@@ -21,17 +32,19 @@ const EditProfileScreen = () => {
       password: password,
     };
 
-    const userId = userInfo.id; // Remplacez par l'ID de l'utilisateur à mettre à jour
+    const userId = userInfo.id;
+    const token = userToken;
+
     console.log("userData", userData);
 
     axios
-      .patch(`${BASE_URL}/users/${userId}`, userData)
+      .patch(`${BASE_URL}/users/${userId}`, userData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
-        // Traitement de la réponse en cas de réussite de la mise à jour du profil
         console.log("Profile updated successfully", response.data);
       })
       .catch((error) => {
-        // Gestion de l'erreur en cas d'échec de la mise à jour du profil
         console.error("Error updating profile", error);
       });
   };
@@ -39,13 +52,12 @@ const EditProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Modifier mon Profil</Text>
-      {/* <Text style={styles.heading}>{userInfo.id}</Text> */}
 
       <TextInput
         style={styles.input}
         value={lastname}
         onChangeText={setLastname}
-        placeholder={`Nom (${userInfo.lastname})`}
+        placeholder="Nom"
         placeholderTextColor="black"
       />
 
@@ -53,7 +65,7 @@ const EditProfileScreen = () => {
         style={styles.input}
         value={firstname}
         onChangeText={setFirstname}
-        placeholder={`Prénom (${userInfo.firstname})`}
+        placeholder="Prénom"
         placeholderTextColor="black"
       />
 
@@ -61,13 +73,13 @@ const EditProfileScreen = () => {
         style={styles.input}
         value={login}
         onChangeText={setLogin}
-        placeholder={`Login (${userInfo.login})`}
+        placeholder="Login"
         placeholderTextColor="black"
       />
 
       <TextInput
         style={styles.input}
-        placeholder={`E-mail (${userInfo.email})`}
+        placeholder="E-mail"
         placeholderTextColor="black"
         value={email}
         onChangeText={setEmail}
