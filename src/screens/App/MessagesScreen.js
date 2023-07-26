@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext,useRef } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ const MessageScreen = () => {
   const { userInfo, userToken } = useContext(AuthContext);
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
+  const yourRef = useRef(null);
 
   useEffect(() => {
     // Replace 'your_server_url' with the actual URL of your Socket.io server
@@ -56,10 +57,9 @@ const MessageScreen = () => {
   }, []);
 
   const sendMessage = () => {
+
     const socket = io.connect("http://10.10.30.125:8888");
-    console.log("sendMessage function called");
     const user_id = userInfo?.id;
-    console.log(userInfo)
     const messageData = {
       content: messageInput,
       user_id: user_id,
@@ -68,7 +68,6 @@ const MessageScreen = () => {
       content:messageInput,
       user_id:userInfo.username
     }
-    console.log('Sending message:', messageData); // Log the message data before sending
 
     axios
       .post("http://10.10.30.125:8888/messages", messageData, {
@@ -78,13 +77,11 @@ const MessageScreen = () => {
       })
       .then((response) => {
      
-        console.log("Response data:", response.data);
         socket.emit('message', messageOnScreen);
                 // Successfully sent the message to the server
         // You may handle the response if needed
       })
       .catch((error) => {
-        console.log('coucou')
         console.error("Error sending message:", error);
         // If there was an error, revert the optimistic update
       });
@@ -94,7 +91,10 @@ const MessageScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.messageContainer}>
+      <ScrollView style={styles.messageContainer}
+      ref={yourRef}
+      onContentSizeChange={() => yourRef.current.scrollToEnd()}
+                onLayout={() => yourRef.current.scrollToEnd()}>
         {messages.map((message, index) => (
           <View
             key={index}
